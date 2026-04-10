@@ -1,0 +1,54 @@
+<launch>
+    <arg name="bounding_box_filename"/>
+    <arg name="odometry_topic" default="odom"/>
+
+	<arg name="init_x"/>
+	<arg name="init_y"/>
+	<arg name="init_z"/>
+
+	<!-- topic of your odometry such as VIO or LIO -->
+	<arg name="odom_topic" default="odom" />
+
+    <group ns="gcs">
+
+		<node pkg="gcs_node" name="gcs_node" type="gcs_node.py">
+			<param name="drone_id" value="gcs" type="string"/>
+			<param name="bounding_box_filename" value="$(arg bounding_box_filename)" />
+			<param name="each_bbox_num" value="1" />
+			<param name="gcs_max_vel" value="1.0"/>
+		</node>
+
+		<!-- trajectory server -->
+		<node pkg="plan_manage" name="traj_server" type="traj_server" output="screen">
+			<remap from="/position_cmd" to="planning/pos_cmd" />
+
+			<remap from="/odom_world" to="$(arg odom_topic)" />
+			<param name="traj_server/time_forward" value="1.5" type="double" />
+			<param name="traj_server/pub_traj_id" value="4" type="int" />
+			<param name="traj_server/init_x" value="$(arg init_x)" type="double" />
+			<param name="traj_server/init_y" value="$(arg init_y)" type="double" />
+			<param name="traj_server/init_z" value="$(arg init_z)" type="double" />
+
+			<param name="perception_utils/top_angle" value="0.56125" type="double" />
+			<param name="perception_utils/left_angle" value="0.69222" type="double" />
+			<param name="perception_utils/right_angle" value="0.68901" type="double" />
+			<param name="perception_utils/max_dist" value="4.5" type="double" />
+			<param name="perception_utils/vis_dist" value="1.0" type="double" />
+		</node>
+
+		<!-- use simulator -->
+		<include file="$(find mission_manager)/launch/simulator_light_gcs.xml">
+
+			<arg name="init_x" value="$(arg init_x)" />
+			<arg name="init_y" value="$(arg init_y)" />
+			<arg name="init_z" value="$(arg init_z)" />
+
+			<arg name="odometry_topic" value="$(arg odom_topic)" />
+			<arg name="c_num" value="0" />
+			<arg name="p_num" value="130" />
+			
+			<arg name="robot_type" value="gcs"/>
+		</include>
+    </group>
+
+</launch>

@@ -1,0 +1,19 @@
+.vscode
+build
+devel
+src/mission_manager/models/*.pcd
+.catkin_workspace
+log
+src/FUEL/fuel_planner/utils/lkh_tsp_solver/resource/*
+!src/FUEL/fuel_planner/utils/lkh_tsp_solver/resource/test.txt
+**/*.pyc
+src/exp_node/scripts/*.yaml
+src/gcs_node/scripts/*.yaml
+src/mission_manager/models/*.npy
+
+# png
+src/visualizer_node/figures/*.png
+
+src/recorder/data/**
+
+**/__pycache__

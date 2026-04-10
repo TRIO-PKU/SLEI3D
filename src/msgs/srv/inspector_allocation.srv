@@ -1,0 +1,4 @@
+int32 first_inspector_id
+int32 last_inspector_id
+---
+bool received

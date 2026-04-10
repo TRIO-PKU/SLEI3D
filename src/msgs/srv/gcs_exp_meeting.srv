@@ -1,0 +1,6 @@
+string[] bbox
+int64 bbox_id
+string[] ins_ids
+geometry_msgs/PoseStamped meeting_pose
+---
+bool success

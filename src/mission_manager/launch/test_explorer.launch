@@ -1,0 +1,64 @@
+<launch>
+	<node pkg="map_generator" name="map_pub" type="map_pub" output="screen"
+		args="$(find mission_manager)/models/modens_surface_dense.pcd" />
+
+	<node pkg="visualizer" name="visualizer" type="visualizer.py" output="screen"/>
+
+	<node pkg="waypoint_generator" name="waypoint_generator" type="waypoint_generator"
+		output="screen">
+		<remap from="~odom" to="odom" />
+		<remap from="~goal" to="/move_base_simple/goal" />
+		<remap from="~traj_start_trigger" to="/traj_start_trigger" />
+		<param name="waypoint_type" value="point" />
+	</node>
+
+    <include file="$(find mission_manager)/launch/gcs.xml">
+		<arg name="bounding_box_filename" value="$(find mission_manager)/models/box_description.yaml" />
+		<arg name="exp_num" value="4" />
+        <arg name="ins_num" value="0" />
+        <arg name="robot_type" value="gcs" />
+        <arg name="drone_id" value="gcs" />
+        <arg name="odometry_topic" value="odom" />
+
+        <arg name="init_x" value="6.0" />
+		<arg name="init_y" value="5.0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="1" />
+		<arg name="robot_type" value="quadrotor" />
+
+		<arg name="init_x" value="2" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="2" />
+		<arg name="robot_type" value="quadrotor" />
+
+		<arg name="init_x" value="0" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="3" />
+		<arg name="robot_type" value="quadrotor" />
+
+		<arg name="init_x" value="-2" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="4" />
+		<arg name="robot_type" value="quadrotor" />
+
+		<arg name="init_x" value="0" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+</launch>

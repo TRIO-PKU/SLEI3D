@@ -1,0 +1,7 @@
+string ins_id
+nav_msgs/Path unfinished_inspection_poses
+nav_msgs/Path finished_inspection_poses
+geometry_msgs/Point32 current_position
+---
+bool success
+

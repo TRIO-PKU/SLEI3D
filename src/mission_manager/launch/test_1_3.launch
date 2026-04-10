@@ -1,0 +1,63 @@
+<launch>
+	<param name="/exp_num" value="1"/>
+	<param name="/ins_num" value="3"/>
+	<param name="/communication_range" value="4"/>
+	<param name="/inspection_time" value="3.0"/>
+	<arg name="map_name" value="single_bbox"/>
+
+
+	<param name="/voxel_map_path" value="$(find mission_manager)/models/voxel_map.npy" />
+	<node pkg="map_generator" name="map_pub" type="map_pub" output="screen"
+	args="$(find mission_manager)/models/$(arg map_name).pcd" />
+	<param name="/stl_path" value="package://mission_manager/models/$(arg map_name).stl"/>
+	<param name="/bbox_description_path" value="$(find mission_manager)/models/$(arg map_name).yaml"/>
+
+	<node pkg="visualizer_node" name="visualizer_node" type="visualizer_node.py" output="screen"/>
+	<node pkg="visualizer_node" name="animation_node" type="animation_node.py" output="screen"/>
+	<node pkg="env_server" name="env_server" type="env_server.py" output="screen"/>
+
+    <include file="$(find mission_manager)/launch/gcs.xml">
+		<arg name="bounding_box_filename" value="$(find mission_manager)/models/box_description.yaml" />
+        <arg name="init_x" value="0.0" />
+		<arg name="init_y" value="11.0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_1" />
+		<arg name="init_x" value="0" />
+		<arg name="init_y" value="12" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_1" />
+		<arg name="color/r" value="1.0" />
+		<arg name="color/g" value="0.078" />
+		<arg name="color/b" value="0.576" />
+		<arg name="init_x" value="-1" />
+		<arg name="init_y" value="12" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_2" />
+		<arg name="color/r" value="0.72" />
+		<arg name="color/g" value="0.33" />
+		<arg name="color/b" value="0.827" />
+		<arg name="init_x" value="0" />
+		<arg name="init_y" value="13" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_3" />
+		<arg name="color/r" value="1.0" />
+		<arg name="color/g" value="0.75" />
+		<arg name="color/b" value="0.75" />
+		<arg name="init_x" value="1" />
+		<arg name="init_y" value="12" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+</launch>

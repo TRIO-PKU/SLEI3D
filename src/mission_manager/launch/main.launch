@@ -1,0 +1,111 @@
+<launch>
+	<param name="/exp_num" value="4"/>
+	<param name="/ins_num" value="8"/>
+	<param name="/communication_range" value="5.0"/>
+	<param name="/inspection_time" value="3.0"/>
+	<arg name="map_name" value="modens"/>
+
+	<param name="/voxel_map_path" value="$(find mission_manager)/models/voxel_map.npy"/>
+	<node pkg="map_generator" name="map_pub" type="map_pub" output="screen"
+	args="$(find mission_manager)/models/$(arg map_name).pcd" />
+	<param name="/stl_path" value="package://mission_manager/models/$(arg map_name).stl"/>
+	<param name="/bbox_description_path" value="$(find mission_manager)/models/$(arg map_name).yaml"/>
+
+	<node pkg="visualizer_node" name="visualizer_node" type="visualizer_node.py" output="screen"/>
+	<node pkg="env_server" name="env_server" type="env_server.py" output="screen"/>
+	<node pkg="recorder" name="recorder" type="recorder.py" output="screen">
+		<param name="file_storage_path" value="$(find recorder)/data" />
+	</node>
+
+    <include file="$(find mission_manager)/launch/gcs.xml">
+		<arg name="bounding_box_filename" value="$(find mission_manager)/models/box_description.yaml" />
+        <arg name="init_x" value="0.0" />
+		<arg name="init_y" value="0.0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_1" />
+		<arg name="init_x" value="2" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_2" />
+		<arg name="init_x" value="0" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_3" />
+		<arg name="init_x" value="-2" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_4" />
+		<arg name="init_x" value="0" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_1" />
+		<arg name="init_x" value="1" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_2" />
+		<arg name="init_x" value="0" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_3" />
+		<arg name="init_x" value="-1" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_4" />
+		<arg name="init_x" value="0" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_5" />
+		<arg name="init_x" value="1" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_6" />
+		<arg name="init_x" value="1" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_7" />
+		<arg name="init_x" value="-1" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_8" />
+		<arg name="init_x" value="-1" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+</launch>

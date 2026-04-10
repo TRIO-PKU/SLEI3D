@@ -1,0 +1,10 @@
+string exp_id
+string bbox
+geometry_msgs/PoseStamped meeting_pose
+nav_msgs/Path inspection_poses
+bspline/Bspline[] bsplines
+Combine_bspline_inspection_pose[] combine_list
+---
+bool success
+string ins_id
+nav_msgs/Path finished_inspection_poses

@@ -1,0 +1,11 @@
+time start_time
+geometry_msgs/Vector3 pos
+geometry_msgs/Vector3 vel
+geometry_msgs/Vector3 acc
+geometry_msgs/Vector3 yaw
+geometry_msgs/Vector3 next_pos
+float64 next_yaw
+---
+bool success
+bspline/Bspline bspline
+float64 duration

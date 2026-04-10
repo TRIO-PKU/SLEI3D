@@ -1,0 +1,60 @@
+<launch>
+	<arg name="init_x" />
+	<arg name="init_y" />
+	<arg name="init_z" />
+	<!-- <arg name="map_size_x_" />
+	<arg name="map_size_y_" />
+	<arg name="map_size_z_" /> -->
+	<arg name="box_min_x" />
+	<arg name="box_min_y" />
+	<arg name="box_min_z" />
+	<arg name="box_max_x" />
+	<arg name="box_max_y" />
+	<arg name="box_max_z" />
+	<arg name="c_num" />
+	<arg name="p_num" />
+	<arg name="odometry_topic" />
+	<arg name="obj_num" value="1" />
+
+    <arg name="robot_type"/>
+
+	<!-- map generation 1-->
+	<!-- Change office.pcd to specify the exploration environment -->
+	<!-- We provide office2.pcd, office3.pcd and pillar.pcd in this repo -->
+	<!-- <node pkg="map_generator" name="map_pub" type="map_pub" output="screen"
+		args="$(find map_generator)/resource/office.pcd" /> -->
+
+	<node pkg="odom_visualization" name="odom_visualization" type="odom_visualization"
+		output="screen">
+		<remap from="~odom" to="$(arg odometry_topic)" />
+		<param name="color/a" value="1.0" />
+		<param name="color/r" value="0.0" />
+		<param name="color/g" value="0.0" />
+		<param name="color/b" value="1.0" />
+		<param name="covariance_scale" value="100.0" />
+		<param name="robot_scale" value="1.0" />
+        <param name="robot_type" value="$(arg robot_type)" />
+	</node>
+
+	<node pkg="poscmd_2_odom" name="poscmd_2_odom" type="poscmd_2_odom"
+		output="screen">
+		<param name="init_x" value="$(arg init_x)" />
+		<param name="init_y" value="$(arg init_y)" />
+		<param name="init_z" value="$(arg init_z)" />
+		<remap from="~command" to="planning/pos_cmd" />
+		<remap from="~odometry" to="$(arg odometry_topic)" />
+	</node>
+
+	<node pkg="local_sensing_node" type="pcl_render_node_cloud" name="pcl_render_node_cloud" output="screen">
+		<rosparam command="load" file="$(find local_sensing_node)/params/camera.yaml" />
+		<param name="sensing_horizon" value="5.0" />
+		<param name="sensing_rate" value="5.0" />
+		<param name="estimation_rate" value="15.0" />
+
+		<remap from="~global_map" to="/map_generator/global_cloud" />
+		<remap from="~odometry" to="odom" />
+		<remap from="/pcl_render_node/cloud" to="pcl_render_node/cloud"/>
+		<remap from="/pcl_render_node/sensor_pose" to="pcl_render_node/sensor_pose"/>
+	</node>
+	
+</launch>

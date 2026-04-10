@@ -1,0 +1,448 @@
+<launch>
+	<param name="/exp_num" value="10"/>
+	<param name="/ins_num" value="50"/>
+	<param name="/communication_range" value="8.0"/>
+	<param name="/inspection_time" value="3"/>
+	<arg name="map_name" value="ancients_half"/>
+
+	<param name="/voxel_map_path" value="$(find mission_manager)/models/voxel_map.npy"/>
+	<node pkg="map_generator" name="map_pub" type="map_pub" output="screen"
+	args="$(find mission_manager)/models/$(arg map_name).pcd" />
+	<param name="/stl_path" value="package://mission_manager/models/$(arg map_name).stl"/>
+	<param name="/bbox_description_path" value="$(find mission_manager)/models/$(arg map_name).yaml"/>
+
+	<node pkg="visualizer" name="visualizer" type="visualizer.py" output="screen"/>
+	<node pkg="env_server" name="env_server" type="env_server.py" output="screen"/>
+
+    <include file="$(find mission_manager)/launch/gcs.xml">
+		<arg name="bounding_box_filename" value="$(find mission_manager)/models/box_description.yaml" />
+        <arg name="init_x" value="0.0" />
+		<arg name="init_y" value="0.0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<!-- region exp -->
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_1" />
+		<arg name="init_x" value="-1" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_2" />
+		<arg name="init_x" value="-1" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_3" />
+		<arg name="init_x" value="-1" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_4" />
+		<arg name="init_x" value="-1" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_5" />
+		<arg name="init_x" value="-1" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_6" />
+		<arg name="init_x" value="1" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_7" />
+		<arg name="init_x" value="1" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_8" />
+		<arg name="init_x" value="1" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_9" />
+		<arg name="init_x" value="1" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_explorer.xml">
+		<arg name="drone_id" value="exp_10" />
+		<arg name="init_x" value="1" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<!-- region ins -->
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_1" />
+		<arg name="init_x" value="-2" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_2" />
+		<arg name="init_x" value="-3" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_3" />
+		<arg name="init_x" value="-4" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_4" />
+		<arg name="init_x" value="-5" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_5" />
+		<arg name="init_x" value="-6" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_6" />
+		<arg name="init_x" value="-2" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_7" />
+		<arg name="init_x" value="-3" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_8" />
+		<arg name="init_x" value="-4" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_9" />
+		<arg name="init_x" value="-5" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_10" />
+		<arg name="init_x" value="-6" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_11" />
+		<arg name="init_x" value="-2" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_12" />
+		<arg name="init_x" value="-3" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_13" />
+		<arg name="init_x" value="-4" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_14" />
+		<arg name="init_x" value="-5" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_15" />
+		<arg name="init_x" value="-6" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_16" />
+		<arg name="init_x" value="-2" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_17" />
+		<arg name="init_x" value="-3" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_18" />
+		<arg name="init_x" value="-4" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_19" />
+		<arg name="init_x" value="-5" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_20" />
+		<arg name="init_x" value="-6" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_21" />
+		<arg name="init_x" value="-2" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_22" />
+		<arg name="init_x" value="-3" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_23" />
+		<arg name="init_x" value="-4" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_24" />
+		<arg name="init_x" value="-5" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_25" />
+		<arg name="init_x" value="-6" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_26" />
+		<arg name="init_x" value="2" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_27" />
+		<arg name="init_x" value="3" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_28" />
+		<arg name="init_x" value="4" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_29" />
+		<arg name="init_x" value="5" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_30" />
+		<arg name="init_x" value="6" />
+		<arg name="init_y" value="2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_31" />
+		<arg name="init_x" value="2" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_32" />
+		<arg name="init_x" value="3" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_33" />
+		<arg name="init_x" value="4" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_34" />
+		<arg name="init_x" value="5" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_35" />
+		<arg name="init_x" value="6" />
+		<arg name="init_y" value="1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_36" />
+		<arg name="init_x" value="2" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_37" />
+		<arg name="init_x" value="3" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_38" />
+		<arg name="init_x" value="4" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_39" />
+		<arg name="init_x" value="5" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_40" />
+		<arg name="init_x" value="6" />
+		<arg name="init_y" value="0" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_41" />
+		<arg name="init_x" value="2" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_42" />
+		<arg name="init_x" value="3" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_43" />
+		<arg name="init_x" value="4" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_44" />
+		<arg name="init_x" value="5" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_45" />
+		<arg name="init_x" value="6" />
+		<arg name="init_y" value="-1" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_46" />
+		<arg name="init_x" value="2" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_47" />
+		<arg name="init_x" value="3" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_48" />
+		<arg name="init_x" value="4" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_49" />
+		<arg name="init_x" value="5" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+	<include file="$(find mission_manager)/launch/single_inspector.xml">
+		<arg name="drone_id" value="ins_50" />
+		<arg name="init_x" value="6" />
+		<arg name="init_y" value="-2" />
+		<arg name="init_z" value="1.0" />
+	</include>
+
+</launch>

@@ -1,0 +1,6 @@
+string exp_id
+bool finished_bbox
+nav_msgs/Path finished_inspection_poses
+duration predicted_finish_time
+---
+bool success

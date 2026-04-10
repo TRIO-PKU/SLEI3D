@@ -1,0 +1,62 @@
+<launch>
+	<arg name="drone_id" />
+
+	<arg name="init_x" default="0" />
+	<arg name="init_y" default="0" />
+	<arg name="init_z" default="1.0" />
+
+	<!-- topic of your odometry such as VIO or LIO -->
+	<arg name="odom_topic" default="odom" />
+
+	<group ns="$(arg drone_id)">
+
+		<!-- <node pkg="exp_mission_executer" name="exp_mission_executer" type="exp_mission_executer.py">
+			<param name="drone_id" value="$(arg drone_id)" type="string"/>
+		</node>
+		<node pkg="exp_point_manager" name="exp_point_manager" type="exp_point_manager.py" output="screen">
+			<param name="drone_id" value="$(arg drone_id)" type="string"/>
+		</node> -->
+
+		<node pkg="exp_node" name="exp_node" type="exp_node.py">
+			<param name="drone_id" value="$(arg drone_id)" type="string"/>
+			<param name="ins_max_vel" value="1.0"/>
+			<param name="exp_max_vel" value="2.5"/>
+			<param name="inspection_time" value="3"/>
+		</node>
+
+		<!-- trajectory server -->
+		<node pkg="plan_manage" name="traj_server" type="traj_server">
+			<remap from="/position_cmd" to="planning/pos_cmd" />
+
+			<remap from="/odom_world" to="$(arg odom_topic)" />
+			<param name="traj_server/time_forward" value="1.5" type="double" />
+			<param name="traj_server/pub_traj_id" value="4" type="int" />
+			<param name="traj_server/init_x" value="$(arg init_x)" type="double" />
+			<param name="traj_server/init_y" value="$(arg init_y)" type="double" />
+			<param name="traj_server/init_z" value="$(arg init_z)" type="double" />
+
+			<param name="perception_utils/top_angle" value="0.56125" type="double" />
+			<param name="perception_utils/left_angle" value="0.69222" type="double" />
+			<param name="perception_utils/right_angle" value="0.68901" type="double" />
+			<param name="perception_utils/max_dist" value="4.5" type="double" />
+			<param name="perception_utils/vis_dist" value="1.0" type="double" />
+		</node>
+
+		<!-- use simulator -->
+		<include file="$(find mission_manager)/launch/simulator_light_exp.xml">
+			<!-- <arg name="map_size_x_" value="$(arg map_size_x)" />
+			<arg name="map_size_y_" value="$(arg map_size_y)" />
+			<arg name="map_size_z_" value="$(arg map_size_z)" />  -->
+
+			<arg name="init_x" value="$(arg init_x)" />
+			<arg name="init_y" value="$(arg init_y)" />
+			<arg name="init_z" value="$(arg init_z)" />
+
+			<arg name="odometry_topic" value="$(arg odom_topic)" />
+			<arg name="c_num" value="0" />
+			<arg name="p_num" value="130" />
+			
+			<arg name="robot_type" value="quadrotor"/>
+		</include>
+	</group>
+</launch>
