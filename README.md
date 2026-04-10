@@ -4,9 +4,19 @@
 
 This project has been tested on Ubuntu 20.04 (ROS Noetic). Run the following commands to install required tools:
 
+
+Install dependencies:
+
 ```
   sudo apt-get install libarmadillo-dev ros-noetic-nlopt libglfw3-dev libdw-dev libnlopt-dev python-is-python3
 ```
+
+Install pcd maps (use pip to install gdown):
+
+```bash
+gdown --folder https://drive.google.com/drive/folders/12s9l-uQVH-bmVnfkRgu2A4sI0ILPxyFY?usp=share_link --output src/mission_manager/models
+```
+
 
 ```bash
     rm -rf build/ devel/ && catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3
